@@ -40,3 +40,12 @@ def read_todo(todo_id: int):
      else:
         return {"error": "Todo not found"}
      
+@app.delete("/todos/{todo_id}")
+def del_todo(todo_id: int):
+    todo_id -= 1
+    if 0 <= todo_id < len(todos):
+        todos.pop(todo_id)
+    else:
+        return {"error": "Todo not found"}
+    
+    
