@@ -22,12 +22,24 @@
                 todoList.innerHTML = '';
                 data.todos.forEach((todo, index) => {
                     const li = document.createElement('li');
-                    li.textContent = todo;
+                    li.innerHTML = todo + '<button style="margin-left: 10px;" onclick="deleteTodo(' + index + ')">  🗑️  </button>'
                     todoList.appendChild(li);
                 });
             } catch (error) {
                 console.error('Error fetching todos:', error);
             }
+        }
+
+        function deleteTodo(index) {
+             fetch('http://localhost:8000/todos/' + (index + 1), {
+                method: 'DELETE'
+            })
+            .then(response => response.json())
+            .then(data => {
+                console.log(data);
+                fetchTodos();
+            })
+            .catch(error => console.error('Error deleting todo:', error));
         }
 
         fetchTodos();
