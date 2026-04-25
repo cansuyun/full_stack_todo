@@ -1,1 +1,1 @@
-print('derse basla')
+print('derse basladık')
