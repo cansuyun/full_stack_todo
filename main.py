@@ -1,7 +1,12 @@
 from fastapi import FastAPI
 from pydantic import BaseModel
+from fastapi.staticfiles import StaticFiles
+from fastapi.responses import FileResponse
 
 app = FastAPI()
+app.mount("/static", StaticFiles(directory="static", html=True), name="static")
+
+
 
 ## cors fix
 from fastapi.middleware.cors import CORSMiddleware
@@ -16,8 +21,8 @@ app.add_middleware(
 todos =  ["Buy groceries", "Read a book", "Go for a walk"]
 
 @app.get("/")
-def read_root():
-    return {"text": "Hello World"}
+def serve_home():
+    return FileResponse("static/index.html")
 
 class TodoItem(BaseModel):
     todo: str
